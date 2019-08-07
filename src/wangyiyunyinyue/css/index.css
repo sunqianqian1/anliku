@@ -1,0 +1,210 @@
+@charset "UTF-8";
+
+/* header-wrap  start */
+
+.header-wrap {
+    box-sizing: border-box;
+    margin-top: 0.19rem;
+    /* background-color: pink; */
+}
+
+.header-wrap .header {
+    display: flex;
+    height: 0.28rem;
+    line-height: 0.28rem;
+}
+
+.header-wrap .header a {
+    display: flex;
+    width: 0.41rem;
+    flex: 0 0 0.41rem;
+    justify-content: center;
+    color: #000;
+    /* background-color: blue; */
+}
+
+.header-wrap .header a .iconfont {
+    font-size: 0.18rem;
+}
+
+.header-wrap .header .h-content {
+    display: flex;
+    flex: 1;
+    /*在主轴方向上居中对齐*/
+    justify-content: center;
+    align-content: center;
+    padding: 0 0.2rem;
+}
+
+.header-wrap .header .h-content ul {
+    display: flex;
+    width: 1.78rem;
+    flex: 1 0 1.78rem;
+    /* 在主轴方向上两端对齐 */
+    justify-content: space-between;
+    font-size: 0.14rem;
+    /* background-color: red; */
+}
+
+.header-wrap .header .h-content ul li {
+    flex: 1;
+    text-align: center;
+}
+
+
+/* header-wrap  end */
+
+
+/* nav start */
+
+
+/* .nav {
+    background-color: red; 
+     height: 0.3rem;
+} */
+
+.nav .nav-list {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.13rem 0.14rem;
+    /* background-color: skyblue; */
+}
+
+.nav .nav-list .nav-item {
+    width: 0.37rem;
+    flex: 0 0 0.37rem;
+    height: 0.5rem;
+}
+
+.nav .nav-list .nav-item .nav-img {
+    display: flex;
+    justify-content: center;
+    height: 0.37rem;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 0.37rem;
+    background-color: red;
+}
+
+.nav .nav-list .nav-item .nav-img .iconfont {
+    position: relative;
+    font-size: 0.18rem;
+    color: #fff;
+}
+
+.nav .nav-list .nav-item .nav-img .iconfont.icon-paihangbang {
+    /* background-color: #fff; */
+    padding-left: 0.06rem;
+}
+
+.nav .nav-list .nav-item .nav-img .iconfont .time {
+    position: absolute;
+    top: 0.17rem;
+    left: 0.012rem;
+    font-size: 0.07rem;
+    width: 0.15rem;
+    height: 0.1rem;
+    background-color: #fff;
+    color: red;
+    line-height: 0.1rem;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.nav .nav-list .nav-item .nav-title {
+    font-size: 0.08rem;
+    display: block;
+    margin-top: 0.07rem;
+    text-align: center;
+}
+
+
+/* discover start */
+
+
+/* .discover {
+    height: 3rem;
+    background-color: red;
+} */
+
+.discover .dis-wrap {
+    padding: 0.17rem 0.13rem;
+    /* background-color: pink; */
+}
+
+.discover .dis-wrap .dis-top {
+    display: flex;
+    justify-content: space-between;
+    height: 0.2rem;
+    padding-bottom: 0.13rem;
+    /* background-color: blue; */
+}
+
+.discover .dis-wrap .dis-top .dis-title {
+    font-size: 0.13rem;
+    line-height: 0.2rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.discover .dis-wrap .dis-top .dis-more {
+    overflow: hidden;
+    width: 0.54rem;
+    height: 0.19rem;
+    font-size: 0.08rem;
+    line-height: 0.2rem;
+    text-align: center;
+    border: 0.01rem solid #e6e6e6;
+    border-radius: 0.085rem;
+}
+
+.discover .dis-wrap .dis-top .dis-more a {
+    display: block;
+    color: #333;
+}
+
+.discover .dis-wrap .dis-top .dis-more a:active {
+    background-color: #e6e6e6;
+}
+
+.discover .dis-wrap .dis-content {
+    height: 3rem;
+    /* background-color: skyblue; */
+}
+
+.discover .dis-wrap .dis-content .dis-list {
+    display: flex;
+    /*换行*/
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+}
+
+.discover .dis-wrap .dis-content .dis-list .dis-item {
+    width: 0.92rem;
+    height: 1.22rem;
+    /* background-color: red; */
+}
+
+.discover .dis-wrap .dis-content .dis-list .dis-item .dis-img {
+    display: flex;
+    overflow: hidden;
+    height: 0.92rem;
+    border-radius: 0.04rem;
+    /* background-color: purple; */
+}
+
+.discover .dis-wrap .dis-content .dis-list .dis-item .dis-img img {
+    /*防止后台传回来的图片大小不一样*/
+    width: 100%;
+}
+
+.discover .dis-wrap .dis-content .dis-list .dis-item .dis-desc {
+    font-size: 0.08rem;
+    color: #444;
+    line-height: 0.14rem;
+    padding-top: 0.04rem;
+}
+
+
+/* discover end */
