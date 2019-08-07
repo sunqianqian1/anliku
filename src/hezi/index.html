@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <meta name="keywords" content="关键词">
+        <meta name="description" content="描述">
+        <meta name="author" content="">
+        <style>
+            body{font-family: "Microsoft YaHei",serif;}
+            body,dl,dd,p,h1,h2,h3,h4,h5,h6{margin:0;}
+            ol,ul,li{margin:0;padding:0;list-style:none;}
+            img{border:none;}
+
+            .wrap{
+                position: absolute;
+                top: 300px;
+                left: 400px;
+                width: 100px;
+                height: 100px;
+                background-color: pink;
+                user-select: none;
+            }
+            .wrap div{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+            .wrap .w{
+                top: 0;
+                left: 0;
+                width: 5px;
+                background-color: #43c052;
+                cursor: w-resize;
+            }
+            .wrap .n{
+                top: 0;
+                left: 0;
+                height: 5px;
+                background-color: #43c052;
+                cursor: n-resize;
+            }
+            .wrap .e{
+                top: 0;
+                right: 0;
+                width: 5px;
+                background-color: #43c052;
+                cursor: e-resize;
+            }
+            .wrap .s{
+                bottom: 0;
+                left: 0;
+                height: 5px;
+                background-color: #43c052;
+                cursor: s-resize;
+            }
+            .wrap .nw{
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 5px;
+                background-color: #f00;
+                cursor: nw-resize;
+            }
+            .wrap .ne{
+                top: 0;
+                right: 0;
+                width: 5px;
+                height: 5px;
+                background-color: #f00;
+                cursor: ne-resize;
+            }
+            .wrap .se{
+                bottom: 0;
+                right: 0;
+                width: 5px;
+                height: 5px;
+                background-color: #f00;
+                cursor: se-resize;
+            }
+            .wrap .sw{
+                bottom: 0;
+                left: 0;
+                width: 5px;
+                height: 5px;
+                background-color: #f00;
+                cursor: sw-resize;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="n"></div>
+            <div class="e"></div>
+            <div class="s"></div>
+            <div class="w"></div>
+            <div class="nw"></div>
+            <div class="ne"></div>
+            <div class="se"></div>
+            <div class="sw"></div>
+        </div>
+        
+        <script>
+            var oWrap = document.querySelector(".wrap");
+            var oDiv = document.querySelectorAll(".wrap div");
+            for(var i = 0; i < oDiv.length; i++){
+                oDiv[i].index = i;
+                oDiv[i].onmousedown = function(e){
+                    i = this.index;
+                    e = e || window.event;
+                    var sX = e.clientX,//初始位置
+                        sY = e.clientY,
+                        left = oWrap.offsetLeft,
+                        top = oWrap.offsetTop,
+                        width = oWrap.offsetWidth,
+                        height = oWrap.offsetHeight,
+                        maxLeft = left + width,
+                        maxTop = top + height;
+                    document.onmousemove = function(e){
+                        e = e || window.event;
+                        var cX = e.clientX - sX,//鼠标移动的变化量
+                            cY = e.clientY - sY,
+                            _width = width,
+                            _height = height,
+                            _left = left,
+                            _top = top;
+                        console.log(i);
+                            switch(i){
+                                case 0:
+                                    _height = height - cY;//cY往上是负数
+                                    _top = top + cY;//往上是负数，所以加
+                                    break;
+                                case 1:
+                                    _width = width + cX;//cX往右是正数
+                                    break;
+                                case 2:
+                                    _height = height + cY;
+                                    break;
+                                case 3:
+                                    _width = width - cX;
+                                    _left = left + cX;
+                                    break;
+                                case 4:
+                                    _width = width - cX;
+                                    _height = height - cY;
+                                    _top = top + cY;
+                                    _left = left + cX;
+                                    break;
+                                case 5:
+                                    _width = width + cX;
+                                    _height = height - cY;
+                                    _top = top + cY;
+                                    break;
+                                case 6:
+                                    _width = width + cX;
+                                    _height = height + cY;
+                                    break;
+                                case 7:
+                                    _width = width - cX;
+                                    _height = height + cY;
+                                    _left = left + cX;
+                                    break;
+                            }
+                            _width = Math.max(_width,20);//控制边界,控制最小值
+                            _height = Math.max(_height,20);
+                            _left = Math.min(_left,maxLeft);
+                            _top = Math.min(_top,maxTop);
+                            oWrap.style.top = _top + "px";
+                            oWrap.style.height = _height + "px";
+                            oWrap.style.width = _width + "px";
+                            oWrap.style.left = _left + "px";
+                    }
+                    document.onmouseup = function(e){
+                        this.onmousemove = null;
+                    }
+                }
+            }
+            function getStyle(ele,attr){
+                return window.getComputedStyle ? window.getComputedStyle(ele)[attr] : ele.currentStyle[attr];
+            }
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
