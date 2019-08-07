@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .ball{
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        // var oBall = document.querySelector(".ball");
+        var width = getViewportoffset().x;
+        var height = getViewportoffset().y;
+        window.onreset = function(){//当浏览器屏幕尺寸改变触发
+            width = getViewportoffset().x;
+            height = getViewportoffset().y;
+        }
+        for(var i = 0; i < 5; i++){
+            creatBall();
+        }
+        function creatBall(){
+            var oBall = document.createElement("div");
+                oBall.style.background = rgb();//创建时给一个初始颜色
+                oBall.className = "ball";
+                //每个小球的随机步长
+                oBall.x = parseInt(Math.random() * 5 + 2);
+                oBall.y = parseInt(Math.random() * 5 + 2);
+                oBall.r = parseInt(Math.random() * 100 + 80);//球的直径
+                //获取每个小球初始值
+                var oLeft = oBall.offsetLeft;
+                var oTop = oBall.offsetTop;
+                (function(){
+                    oLeft = oLeft + oBall.x;
+                    oTop = oTop + oBall.y;
+                    //判断边界
+                    if(oLeft > width - oBall.r || oLeft <= 0){
+                        oBall.x = -oBall.x;
+                        oLeft = Math.max(0,oLeft);
+                        oLeft = Math.min(width - oBall.r,oLeft);
+                        //oBall.style.background = rgb();//碰撞时生成随机颜色
+                    }
+                    if(oTop > height - oBall.r || oTop <= 0){
+                        oBall.y = -oBall.y;
+                        oTop = Math.max(0,oTop);
+                        oTop = Math.min(height - oBall.r,oTop);
+                        //oBall.style.background = rgb();//碰撞时生成随机颜色
+                    }
+                    oBall.style.left = oLeft + "px";
+                    oBall.style.top = oTop + "px";
+                    oBall.style.width = oBall.r + "px";
+                    oBall.style.height = oBall.r + "px";
+                    oBall.style.background = rgb();//浏览器每刷新一下生成颜色
+                    requestAnimationFrame(arguments.callee);
+                })()
+                document.body.appendChild(oBall);
+        }
+        //随机颜色
+        function rgb(){
+            return "rgb(" + Math.floor(Math.random() * 256) +"," + Math.floor(Math.random() * 256) +"," + Math.floor(Math.random() * 256) +")"
+        }
+        function getViewportoffset(){
+            if(window.innerHeight){
+                return{
+                    x : window.innerWidth,
+                    y : window.innerHeight 
+                }             
+            }else{
+                if(document.compatMode == "BackCompat"){
+                    return {
+                        x : document.body.clientWidth,
+                        y : document.body.clientHeight
+                    }
+                }else{
+                    return {
+                        x : document.documentElement.clientWidth,
+                        y : document.documentElement.clientHeight
+                    }
+                }
+            }
+        }
+    </script> 
+</body>
+</html>
