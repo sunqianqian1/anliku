@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      width: 500px;
+      height: 500px;
+      margin: auto;
+    }
+
+    .menu {
+      width: 100px;
+      margin: auto;
+      box-shadow: 0 0 5px #000;
+      background-color: #fff;
+    }
+
+    .menu ul li {
+      list-style: none;
+      line-height: 30px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    #box {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      margin-left: -110px;
+      width: 220px;
+      height: 50px;
+      background-color: #fff;
+      box-shadow: 0 0 10px #ccc;
+    }
+
+    #box input {
+      height: 30px;
+      margin-left: 5px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container"></div>
+
+  <div id="box">
+    <input type="text" id="city" placeholder='请输入城市...'>
+    <input type="button" value="搜索" id="btn">
+  </div>
+
+
+  <script type="text/javascript"
+    src="https://webapi.amap.com/maps?v=1.4.15&key=ad13389566f6d530b8a727b428809afd"></script>
+
+
+  <script>
+    // 获取元素
+    let city = document.getElementById('city')
+    let btn = document.getElementById('btn')
+
+    // 地图信息
+    var map = new AMap.Map('container');
+    var toolBar, mouseTool, contextMenu;
+
+    // 在地图里面添加ToolBar, MouseTool 插件
+    map.plugin(['AMap.ToolBar', 'AMap.MouseTool'], function () {
+      toolBar = new AMap.ToolBar();
+      map.addControl(toolBar);
+      mouseTool = new AMap.MouseTool(map);
+
+    });
+
+
+    var menuContext = document.createElement('div');
+    menuContext.innerHTML = `
+      <div class="menu">
+        <ul>
+          <li onclick="zoomMenu(0)">缩小</li>
+          <li onclick="zoomMenu(1)">放大</li>
+          <li onclick="distance()">测量距离</li>
+          <li onclick="addMarkerMenu()">添加标记</li>
+        </ul>
+      </div>
+    `;
+
+    // 创建自定义的右键菜单
+    contextMenu = new AMap.ContextMenu({
+      isCustom: true,    //  菜单是鼠标右键的位置显示
+      content: menuContext, // 右键菜单
+    })
+
+    // 给地图鼠标绑定右键功能,弹出右键菜单
+    AMap.event.addListener(map, 'rightclick', function (e) {
+      contextMenu.open(map, e.lnglat);
+      contextMenuPosition = e.lnglat;
+    })
+
+    // 缩放
+    function zoomMenu(n) {
+      if (n === 0) {
+        map.zoomOut()
+      }
+      if (n === 1) {
+        map.zoomIn()
+      }
+      contextMenu.close()
+    }
+
+    // 测量距离
+    function distance() {
+      mouseTool.rule();
+      contextMenu.close()
+    }
+
+    // 添加标记
+    function addMarkerMenu() {
+      new AMap.Marker({
+        map: map,
+        position: contextMenuPosition,
+        // offset: { x: 100, y: 100 }
+      })
+      contextMenu.close();
+    }
+
+    // 搜索城市
+    btn.onclick = function () {
+      var val = city.value;
+      map.setCity(val);
+    }
+  </script>
+</body>
+
+</html>
