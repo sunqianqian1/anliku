@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #000;
+    }
+
+    canvas {
+      display: block;
+      margin: 10px auto;
+      border: 2px solid pink;
+      background-color: #fff;
+    }
+
+    .box {
+      width: 350px;
+      height: 30px;
+      /* background-color: pink; */
+      margin: 10px auto;
+
+    }
+
+    #stroke {
+      width: 50px;
+      height: 18px;
+      text-align: center;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <canvas width="500" height="500"></canvas>
+  <div class="box">
+    <input id="colorList" type="color">
+    <button id='randowColor'>随机颜色</button>
+    <input id='stroke' type="text" value="2px">
+    <button id='add'>笔触增大</button>
+    <button id="reduce">笔触减小</button>
+    <button id="clear">清屏</button>
+  </div>
+
+  <script>
+    // 获取所有的按钮
+    let colorList = document.getElementById('colorList');
+    let randowColor = document.getElementById('randowColor');
+    let stroke = document.getElementById('stroke');
+    let add = document.getElementById('add');
+    let reduce = document.getElementById('reduce');
+    let clear = document.getElementById('clear');
+
+    // canvas设置
+    let canvas = document.getElementsByTagName('canvas')[0];
+    let ctx = canvas.getContext('2d');
+
+    // 信号量
+    let strokeStyle = '#000';
+    let lineWidth = 2;
+
+    // 调整画笔颜色及大小的事件
+    // 选色
+    colorList.onchange = function () {
+      strokeStyle = this.value
+    }
+    // 随机色
+    randowColor.onclick = function () {
+      colorList.value = '#' + Math.random().toString(16).slice(2, 8);
+      strokeStyle = colorList.value;
+    }
+    // 增大笔触
+    add.onclick = function () {
+      if (lineWidth >= 10) return
+      lineWidth += 2;
+      stroke.value = lineWidth + 'px';
+    }
+    // 笔触减小
+    reduce.onclick = function () {
+      if (lineWidth <= 2) return
+      lineWidth -= 2;
+      stroke.value = lineWidth + 'px';
+    }
+    // 清屏
+
+    clear.onclick = function () {
+      ctx.clearRect(0, 0, 500, 500)
+    }
+
+
+
+    // canvas画板
+    canvas.onmousedown = function (ev) {
+      ev = ev || window.event;
+      let This = this;
+
+      let x = ev.clientX - this.offsetLeft;
+      let y = ev.clientY - this.offsetTop;
+
+      // 改变画笔颜色及大小
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidth;
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+
+      document.onmousemove = function (ev) {
+        ev = ev || window.event;
+        let x = ev.clientX - This.offsetLeft;
+        let y = ev.clientY - This.offsetTop;
+
+        ctx.lineTo(x, y);
+        ctx.stroke()
+      }
+
+      document.onmouseup = function () {
+        this.onmousemove = null;
+        this.onmouseup = null;
+      }
+    }
+
+  </script>
+</body>
+
+</html>
