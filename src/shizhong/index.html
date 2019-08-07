@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .clock{
+            position: relative;
+            width: 600px;
+            height: 600px;
+            margin: 50px auto;
+            background:url(b.jpg) no-repeat;
+        }
+        .clock div{
+            width: 100%;
+            height: 100%;
+            position:absolute;
+            top: 0;
+            left: 0;
+        }
+        .h{
+            background: url(h.png) no-repeat center;
+        }
+        .m{
+            background: url(m.png) no-repeat center;
+        }
+        .s{
+            background: url(s.png) no-repeat center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="h" id="hour"></div>
+        <div class="m" id="minute"></div>
+        <div class="s" id="second"></div>
+    </div>
+    <script>
+        var oHour = document.getElementById("hour");
+        var oMiunte = document.getElementById("minute");
+        var oSecond = document.getElementById("second");
+        //开始定时器
+        var s = 0 , m = 0 , h = 0, ms = 0;
+        setInterval(function(){
+            var date = new Date();//得到当前时间
+            ms = date.getUTCMilliseconds();//现在的毫秒数
+            s = date.getSeconds() + ms /1000; //得到秒数
+            m = date.getMinutes() + s /60;//得到分钟
+            h = date.getHours() % 12 + m /60;
+            //旋转角度
+            // 一圈  360 °     一共有 60 秒       每秒  6 °   现在是 s秒
+            oSecond.style.webkitTransform = "rotate("+ s*6 +"deg)";
+                         //  变化            旋转    deg  度
+            oMiunte.style.webkitTransform = "rotate("+ m*6 +"deg)";
+            oHour.style.webkitTransform = "rotate("+ h*30 +"deg)";
+            oSecond.style.MozTransform = "rotate("+ s*6 +"deg)";
+            
+            oMiunte.style.MozTransform = "rotate("+ m*6 +"deg)";
+            oHour.style.MozTransform = "rotate("+ h*30 +"deg)";
+
+
+        },100);
+    </script>
+</body>
+</html>
