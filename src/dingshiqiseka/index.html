@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="keywords" content="关键词">
+        <meta name="description" content="描述">
+        <meta name="author" content="纯洁囝仔">
+        <title>纯洁囝仔的作业</title>
+        <style>
+            body{font-family: "Microsoft YaHei",serif;}
+            body,dl,dd,p,h1,h2,h3,h4,h5,h6{margin:0;}
+            ol,ul,li{margin:0;padding:0;list-style:none;}
+            img{border:none;}
+            #wrap{
+                width: 1100px;
+                border: 1px solid pink;
+                margin: 10px 0 0 50px;
+            }
+            #wrap span{
+                display: inline-block;
+                border: 1px solid black;
+                padding: 0 10px;
+                font-size: 20px;
+            }  
+        </style>
+    </head>
+    <body>
+        <div id = "wrap" class = "wrap">
+            
+        </div>
+        <script>
+            // 1.随机生成颜色在屏幕上显示
+            const oWrap = document.querySelector("#wrap");
+            let rColour, gColour, bColour, oOpacity;
+            let index = 0;
+            let obj = {};
+            
+            // 获取随机整数的函数初始区间star、结束区间end，前闭后开
+            function getRandom(star,end){
+                if(end <= 1){
+                    return Math.round(Math.random()*10)/10; //如果是0到1返回0.0到1.0的数，前闭后闭
+                }
+                return Math.floor(Math.random()*(end - star) + star);
+            }
+
+            clearInterval(obj.setTim);
+            obj.setTim = setInterval(move , 1000);
+            function move(){
+                rColour = getRandom(0,256);
+                gColour = getRandom(0,256);
+                bColour = getRandom(0,256);
+                oOpacity = getRandom(0,1);
+                oWrap.innerHTML += `<span>rgba(${rColour},${gColour},${bColour},${oOpacity})</span>`;
+
+                oWrap.children[index].style.backgroundColor = `rgba(${rColour},${gColour},${bColour},${oOpacity})`;
+                index++;
+
+                if(index == 100){   // 打印一百个
+                    clearInterval(obj.setTim);
+                }
+            }    
+        </script>
+    </body>
+</html>
