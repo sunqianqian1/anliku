@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>正则表单验证</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            position: relative;
+            margin: 100px auto;
+            width: 500px;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .wrap fieldset {
+            width: 100%;
+            padding: 30px;
+            border: 2px solid pink;
+            border-radius: 3px;
+        }
+
+        .wrap legend {
+            font-size: 30px;
+            font-weight: bold;
+            color: blue;
+            margin-left: 100px;
+        }
+
+        .wrap div span {
+            display: inline-block;
+            padding-bottom: 5px;
+            color: cornflowerblue;
+            font-size: 20px;
+        }
+
+        .wrap div input.info {
+            width: 20px;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        .wrap .sub {
+            margin: 20px auto;
+            width: 100px;
+            height: 30px;
+        }
+
+        .wrap #submit {
+            float: left;
+            font-size: 20px;
+        }
+
+        .wrap #cancel {
+            float: right;
+            font-size: 20px;
+        }
+
+        .wrap .error {
+            display: none;
+            color: rgb(82, 197, 15);
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <form action="">
+            <fieldset>
+                <legend>登录信息</legend>
+                <div>
+                    <span>账号：</span> <input class="info" type="text" name="" id="user" placeholder="请输入5到11位数字账号"><span
+                        class="error user1">请输入正确账号</span>
+                </div>
+                <div>
+                    <span>密码：</span> <input class="info" type="text" name="" id="pwd" placeholder="请输入6到18位密码"><span
+                        class="error pwd1">请输入正确密码</span>
+                </div>
+                <div>
+                    <span>邮箱：</span> <input class="info" type="text" name="" id="email" placeholder="请输入正确邮箱"><span
+                        class="error email1">请输入正确邮箱</span>
+                </div>
+                <div>
+                    <span>手机：</span> <input class="info" type="text" name="" id="tel" placeholder="请输入11位手机号"><span
+                        class="error tel1">请输入正确手机号</span>
+                </div>
+                <div class="sub">
+                    <input type="submit" id="submit" value="提交">
+                    <input type="button" id="cancel" value="取消">
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <script>
+        var user1 = document.getElementsByClassName("user1")[0];
+        var pwd1 = document.getElementsByClassName("pwd1")[0];
+        var email1 = document.getElementsByClassName("email1")[0];
+        var tel1 = document.getElementsByClassName("tel1")[0];
+        var arr = [user, pwd, email, tel];//存输入框的id
+        var arr1 = [user1, pwd1, email1, tel1];//存每个输入框的验证提示
+        var reg = [ /^[1-9]\d{4,11}$/,
+                    /^[\w.*&\^$#@!'\]\[{}'"+*\-?/,]{6,18}$/,
+                    /^[0-9A-z][\w.]{1,20}[0-9A-z]@[0-9A-z]{2,6}(\.[A-z]{2,4}){1,2}$/,
+                    /^1[\d]{10}$/
+                    ]//输入内容的正则表达式
+    var len = arr.length;
+        for (var i = 0; i < len; i++) {
+            arr[i].index = i;
+            arr[i].onblur = function () {//输入框失去焦点时触发
+                index = this.index;
+                value = arr[index].value;
+                var result = reg[index].test(value);//验证输入结果是否符正则表达式
+                if (result) {
+                    // arr1[index].style.display = "none";
+                    arr1[index].style.display = "inline-block";
+                    arr1[index].innerText = "√符合要求";
+                    arr1[index].style.color = "rgb(82, 197, 15)";
+                } else if (result == false) {
+                    arr1[index].style.display = "inline-block";
+                    arr1[index].innerText = "×不符合要求";
+                    arr1[index].style.color = "red";
+                }
+                var count=0;
+                for(var i = 0;i < len; i ++){
+                    if(arr1[i].innerText == "√符合要求"){
+                        count++;
+                        if(count == 4){
+                        submit.disabled = false;//验证通过可以提交
+                        }
+                    }else{
+                        submit.disabled = true;//验证不通过无法提交
+                    }
+                }
+            }
+        }
+        cancel.onclick = function(){//重置
+            for(i = 0;i < len; i ++){
+                arr[i].value = "";
+                arr1[i].style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>
